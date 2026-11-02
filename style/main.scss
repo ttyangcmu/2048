@@ -1,5 +1,11 @@
 @import "helpers";
-@import "fonts/clear-sans.css";
+
+@font-face {
+  font-family: "Pusab";
+  src: url("fonts/Pusab-MnqP.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
 
 $field-width: 500px;
 $grid-spacing: 15px;
@@ -9,7 +15,7 @@ $tile-border-radius: 3px;
 
 $mobile-threshold: $field-width + 20px;
 
-$text-color: #776E65;
+$text-color: #fff;
 $bright-text-color: #f9f6f2;
 
 $tile-color: #eee4da;
@@ -25,14 +31,24 @@ html, body {
   margin: 0;
   padding: 0;
 
-  background: #faf8ef;
+  background-color: #faf8ef;
   color: $text-color;
-  font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Pusab", sans-serif;
   font-size: 18px;
+  letter-spacing: 0.5px;
+}
+
+html {
+  background-image: url("../images/background.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 body {
   margin: 80px 0;
+  background: transparent;
 }
 
 .heading {
@@ -323,6 +339,17 @@ hr {
     z-index: 10;
 
     font-size: 55px;
+    position: relative;
+  }
+
+  .tile-face {
+    position: absolute;
+    top: 8%;
+    left: 8%;
+    width: 84%;
+    height: 84%;
+    object-fit: contain;
+    pointer-events: none;
   }
 
   // Movement transition
