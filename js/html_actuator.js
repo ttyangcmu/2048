@@ -7,6 +7,20 @@ function HTMLActuator() {
   this.score = 0;
 }
 
+var difficultyFaces = {
+  2: { name: "Auto", image: "auto" },
+  4: { name: "Easy", image: "easy" },
+  8: { name: "Normal", image: "normal" },
+  16: { name: "Hard", image: "hard" },
+  32: { name: "Harder", image: "harder" },
+  64: { name: "Insane", image: "insane" },
+  128: { name: "Easy Demon", image: "easy-demon" },
+  256: { name: "Medium Demon", image: "medium-demon" },
+  512: { name: "Hard Demon", image: "hard-demon" },
+  1024: { name: "Insane Demon", image: "insane-demon" },
+  2048: { name: "Extreme Demon", image: "extreme-demon" }
+};
+
 HTMLActuator.prototype.actuate = function (grid, metadata) {
   var self = this;
 
@@ -48,11 +62,11 @@ HTMLActuator.prototype.clearContainer = function (container) {
 
 HTMLActuator.prototype.addTile = function (tile) {
   var self = this;
-
   var wrapper   = document.createElement("div");
   var inner     = document.createElement("div");
   var position  = tile.previousPosition || { x: tile.x, y: tile.y };
   var positionClass = this.positionClass(position);
+  var difficulty = difficultyFaces[tile.value];
 
   // We can't use classlist because it somehow glitches when replacing classes
   var classes = ["tile", "tile-" + tile.value, positionClass];
@@ -62,7 +76,15 @@ HTMLActuator.prototype.addTile = function (tile) {
   this.applyClasses(wrapper, classes);
 
   inner.classList.add("tile-inner");
-  inner.textContent = tile.value;
+  if (difficulty) {
+    var face = document.createElement("img");
+    face.classList.add("tile-face");
+    face.src = "images/" + difficulty.image + ".png";
+    face.alt = difficulty.name;
+    inner.appendChild(face);
+  } else {
+    inner.textContent = tile.value;
+  }
 
   if (tile.previousPosition) {
     // Make sure that the tile gets rendered in the previous position first
